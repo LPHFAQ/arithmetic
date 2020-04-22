@@ -11,6 +11,6 @@ module.exports = {
         `
             }
         },
-        publicpath: process.env.NODE_ENV === "production" ? "/arithmetic/dist" : "/"
+        publicpath: process.env.NODE_ENV === "production" ? "/arithmetic" : "/"
     }
 }
