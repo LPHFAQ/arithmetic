@@ -10,6 +10,7 @@ module.exports = {
                   @import "@/global.scss";
         `
             }
-        }
+        },
+        publicpath: process.env.NODE_ENV === "production" ? "/arithmetic/dist" : "/"
     }
 }
