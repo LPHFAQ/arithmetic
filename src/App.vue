@@ -1,7 +1,7 @@
-<template>
+<template >
   <el-row type="flex" justify="center">
     <el-col :xs="24" :sm="18" :md="16" style="max-width: 700px">
-      <el-container id="app" style="min-width: 620px;">
+      <el-container  id="app" style="min-width: 620px;background: white;border: 1px solid #EBEEF5;box-shadow:0 0 5px 3px #EBEEF5">
           <el-header>
             <el-steps :active="activeStep" simple>
               <el-step title="设置" icon="el-icon-setting"></el-step>
@@ -9,8 +9,8 @@
               <el-step title="结果" icon="el-icon-tickets"></el-step>
             </el-steps>
           </el-header>
-          <el-main>
-            <el-container >
+          <el-main >
+            <el-container>
               <el-header style="font-size: 35px">
                 <SettingsHeader
                         v-if="activeStep==0"
@@ -24,7 +24,7 @@
                         @back="handleBack"
                         @submit="handleSubmit"
                 ></table-header>
-                <ResultsHeader v-if="activeStep==2"></ResultsHeader>
+                <ResultsHeader v-if="activeStep==2" @again="handleAgain"></ResultsHeader>
               </el-header>
               <el-divider></el-divider>
               <el-main>
@@ -39,11 +39,16 @@
                       @invisible="dialogs.submit.visible = false"
                       @confirm="handleSubmitConfirm"
               ></SubmitDialog>
-              <Back-dialog
+              <BackDialog
                       :visible="dialogs.back.visible"
                       @invisible="dialogs.back.visible = false"
-                      @confirm = "handleBackConfirm"
-              ></Back-dialog>
+                      @confirm = "init"
+              ></BackDialog>
+              <AgainDialog
+                      :visible="dialogs.again.visible"
+                      @invisible="dialogs.again.visible = false"
+                      @confirm = "init"
+              ></AgainDialog>
             </el-container>
 
           </el-main>
@@ -63,10 +68,12 @@ import BackDialog from "@/components/BackDialog";
 import SettingsHeader from "@/components/SettingsHeader";
 import TableHeader from "@/components/TableHeader";
 import ResultsHeader from "@/components/ResultsHeader";
+import AgainDialog from "@/components/AgainDialog";
+
 
 export default {
   name: 'app',
-  components: {Settings,Table,Results,SubmitDialog,BackDialog,SettingsHeader,TableHeader,ResultsHeader},
+  components: {Settings,Table,Results,SubmitDialog,BackDialog,SettingsHeader,TableHeader,ResultsHeader,AgainDialog},
   data(){
     return{
       activeStep:0,
@@ -76,11 +83,19 @@ export default {
       count:0,
       dialogs:{
         submit:{visible:false},
-        back:{visible:false}
+        back:{visible:false},
+        again:{visible:false}
       }
     }
   },
   methods:{
+    init(){
+      this.activeStep = 0
+      this.settings = {}
+      this.results={}
+      this.percentage=0
+      this.count = 0
+    },
     setRule(){
       this.settings = this.$refs.setting.warpSettings()
       this.activeStep = 1
@@ -96,11 +111,8 @@ export default {
     handleBack(){
       this.dialogs.back.visible = true
     },
-    handleBackConfirm(){
-      this.activeStep = 0
-      this.items = []
-      this.count = 0
-      this.percentage = 0
+    handleAgain(){
+      this.dialogs.again.visible = true
     },
     handleSubmitConfirm(){
       this.results = this.$refs.quizTable.judge()

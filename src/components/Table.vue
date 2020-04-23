@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>
+        <el-header style="height: 30px">
             <el-row type="flex" justify="center">
                 <el-pagination
                         background
@@ -9,23 +9,25 @@
                         :total="settings.total"
                         :current-page.sync="currentPage"
                         @current-change="setShowItems"
+                        style="padding-top: 0"
                 ></el-pagination>
             </el-row>
         </el-header>
-        <el-main>
+        <el-main style="padding-top: 0">
             <el-row type="flex" justify="center">
-                <el-table :data="showItems" style="width: 100%;font-size: 24px">
-                    <el-table-column label="题号" prop="id" width="100">
-                    </el-table-column>
-                    <el-table-column min-width="200" label="题目" prop="quiz">
-                    </el-table-column>
-                    <el-table-column width="150">
-                        <template slot-scope="scope">
-                            <el-input v-model="scope.row.input" @blur="handleBlur"></el-input>
-                        </template>
-
-                    </el-table-column>
-                </el-table>
+                <div class="table">
+                    <el-table :data="showItems" height="420" style="width: 100%;font-size: 24px">
+                        <el-table-column label="题号" prop="id" width="100">
+                        </el-table-column>
+                        <el-table-column min-width="200" label="题目" prop="quiz">
+                        </el-table-column>
+                        <el-table-column width="150">
+                            <template slot-scope="scope">
+                                <el-input v-model="scope.row.input" @blur="handleBlur"></el-input>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </div>
             </el-row>
         </el-main>
     </el-container>
@@ -109,6 +111,12 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    ::-webkit-scrollbar {
+        width: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #DCDFE6;
+      border-radius: 3px;
+    }
 </style>

@@ -4,14 +4,19 @@
             成绩单
         </el-col>
         <el-col :offset="15">
-            <el-button type="primary">再做一次</el-button>
+            <el-button type="primary" @click="handleAgain">再做一次</el-button>
         </el-col>
     </el-row>
 </template>
 
 <script>
     export default {
-        name: "ResultsHeader"
+        name: "ResultsHeader",
+        methods:{
+            handleAgain(){
+                this.$emit('again')
+            }
+        }
     }
 </script>
 
