@@ -6,12 +6,12 @@
             </el-header>
             <el-container>
                 <el-aside width="200px">
-                    <el-progress type="circle" :percentage=Math.round(100*result.items.length/total) :color="progressColor"></el-progress>
+                    <el-progress type="circle" :percentage='total===0?0:Math.round(100*result.items.length/total)' :color="progressColor"></el-progress>
                 </el-aside>
-                <el-main style="padding-top: 0px">
+                <el-main style="padding-top: 0">
                     <el-row v-for="(detail,key) in details" :key="key" type="flex">
                         <span style="margin-bottom: 12px;margin-right: 10px;width: 50px">{{detail.label}}</span>
-                        <el-progress style="width: 100%" :percentage=details[key].percent :color="progressColor"></el-progress>
+                        <el-progress style="width: 100%" :percentage='details[key].percent' :color="progressColor"></el-progress>
                     </el-row>
                 </el-main>
             </el-container>
@@ -20,8 +20,9 @@
                 <el-table v-if="!collapse" :data="result.items" height="350" style="width: 100%;font-size: 24px">
                     <el-table-column label="题号" prop="id" width="100">
                     </el-table-column>
-                    <el-table-column min-width="200" label="题目" prop="quiz">
+                    <el-table-column min-width="170" label="题目" prop="quiz">
                     </el-table-column>
+                    <el-table-column v-if="result.label === '错误'" label="误答" prop="input"></el-table-column>
                     <el-table-column width="100" label="答案" prop="ans">
                     </el-table-column>
                 </el-table>
